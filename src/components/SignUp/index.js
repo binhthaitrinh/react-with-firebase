@@ -27,7 +27,11 @@ const SignUpFormBase = ({ firebase, history }) => {
     e.preventDefault();
     const { username, email, passwordOne } = formData;
     try {
-      await firebase.doCreateUserWithEmailAndPassword(email, passwordOne);
+      const authUser = await firebase.doCreateUserWithEmailAndPassword(
+        email,
+        passwordOne
+      );
+      await firebase.user(authUser.user.uid).set({ username, email });
       setFormData({ ...INITIAL_STATE });
       history.push(ROUTES.HOME);
     } catch (err) {
