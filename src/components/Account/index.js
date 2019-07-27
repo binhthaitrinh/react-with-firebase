@@ -1,7 +1,16 @@
 import React from 'react';
 
-const index = () => {
-  return <div>Account</div>;
+import { PasswordForgetForm } from '../PasswordForget';
+import PasswordChangeForm from '../PasswordChange';
+
+const AccountPage = () => {
+  return (
+    <div>
+      <h1>Account Page</h1>
+      <PasswordForgetForm />
+      <PasswordChangeForm />
+    </div>
+  );
 };
 
-export default index;
+export default AccountPage;
