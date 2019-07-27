@@ -37,6 +37,30 @@ class Firebase {
   // ref() method match the location where entities(users) will be stored in Firebase realtime database
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
+
+  // *** Merge Auth and DB User API *** //
+
+  onAuthUserListener = (next, fallback) =>
+    this.auth.onAuthStateChanged(async authUser => {
+      if (authUser) {
+        const snapshot = await this.user(authUser.uid).once('value');
+        const dbUser = snapshot.val();
+
+        if (!dbUser.roles) {
+          dbUser.roles = {};
+        }
+
+        authUser = {
+          uid: authUser.uid,
+          email: authUser.email,
+          ...dbUser
+        };
+
+        next(authUser);
+      } else {
+        fallback();
+      }
+    });
 }
 
 export default Firebase;

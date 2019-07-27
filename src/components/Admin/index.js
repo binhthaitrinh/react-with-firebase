@@ -10,13 +10,14 @@ const AdminPage = ({ firebase }) => {
     setLoading(true);
     firebase.users().on('value', snapshot => {
       const usersObject = snapshot.val();
+      console.log(usersObject);
 
       const usersList = Object.keys(usersObject).map(key => ({
         ...usersObject[key],
         uid: key
       }));
       setUsers(usersList);
-      console.log(snapshot.val());
+      console.log(usersList);
       setLoading(false);
     });
     return () => firebase.users().off();
