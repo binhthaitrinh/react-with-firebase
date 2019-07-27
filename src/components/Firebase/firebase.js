@@ -44,7 +44,7 @@ class Firebase {
     this.auth.onAuthStateChanged(async authUser => {
       if (authUser) {
         const snapshot = await this.user(authUser.uid).once('value');
-        const dbUser = snapshot.val();
+        const dbUser = await snapshot.val();
 
         if (!dbUser.roles) {
           dbUser.roles = {};

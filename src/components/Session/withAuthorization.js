@@ -9,8 +9,8 @@ import * as ROUTES from '../../constants/routes';
 const withAuthorization = condition => Component => {
   const WithAuthorization = props => {
     useEffect(() => {
-      const listener = props.firebase.auth.onAuthStateChanged(
-        async authUser => {
+      const listener = props.firebase.onAuthUserListener(
+        authUser => {
           if (!condition(authUser)) {
             props.history.push(ROUTES.SIGN_IN);
           }
