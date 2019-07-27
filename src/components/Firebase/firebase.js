@@ -33,7 +33,12 @@ class Firebase {
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
-  // *** Auth API *** //
+  doSendEmailVerification = () =>
+    this.auth.currentUser.sendEmailVerification({
+      url: 'http://localhost:3000'
+    });
+
+  // *** Database API *** //
   // ref() method match the location where entities(users) will be stored in Firebase realtime database
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
@@ -53,6 +58,8 @@ class Firebase {
         authUser = {
           uid: authUser.uid,
           email: authUser.email,
+          emailVerified: authUser.emailVerified,
+          providerData: authUser.providerData,
           ...dbUser
         };
 

@@ -40,6 +40,7 @@ const SignUpFormBase = ({ firebase, history }) => {
         passwordOne
       );
       await firebase.user(authUser.user.uid).set({ username, email, roles });
+      await firebase.doSendEmailVertification();
       setFormData({ ...INITIAL_STATE });
       history.push(ROUTES.HOME);
     } catch (err) {
